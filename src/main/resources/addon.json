@@ -1,0 +1,10 @@
+{
+  "uuid": "%uuid%",
+  "name": "KirchePlusAddon",
+  "mainClass": "UC.KirchePlus.Addon.main.main",
+  "description": "Die Mod KirchePlus! Nur als LabyMod Addon",
+  "version": 1,
+  "author": "Unban und Tobi",
+  "category": 1,
+  "icon": "https://i.imgur.com/RG38X8I.png"
+}
