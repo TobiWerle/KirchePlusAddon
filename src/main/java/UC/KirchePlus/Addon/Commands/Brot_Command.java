@@ -10,6 +10,7 @@ import java.util.List;
 
 import UC.KirchePlus.Addon.Events.Displayname;
 import UC.KirchePlus.Addon.Utils.Brot_User;
+import UC.KirchePlus.Addon.Utils.PlayerCheck;
 import UC.KirchePlus.Addon.Utils.TabellenMethoden;
 import UC.KirchePlus.Addon.main.main;
 import net.labymod.api.events.MessageSendEvent;
@@ -44,6 +45,7 @@ public class Brot_Command {
 						if(args[1].equalsIgnoreCase("help")) {
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/brot " + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "synchronisiere die Brotliste mit dem Client."));
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/brot list" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Gibt eine Liste mit allen Spielern aus, die Brot bekommen haben."));
+							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/brot namecheck" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Überprüft ob es Fehler bei den eingetragenen Spielernamen gibt."));
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/brot info <User>" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Zeigt die Brot-Infos zum Spieler."));
 						}else
 						if(args[1].equalsIgnoreCase("list")) {
@@ -71,6 +73,20 @@ public class Brot_Command {
 								String color = " §a";
 								if(!TabellenMethoden.isSameDay(user.getDatum())) color = " §c";
 								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(color+ " - "+name + color + user.getDatum()));
+							}
+						}else
+						if(args[1].equalsIgnoreCase("namecheck")){
+							ArrayList<String> nameError = new ArrayList<>();
+							for(String name : Displayname.BrotUser.keySet()) {
+								if(!isOnline(name)) {
+									if(PlayerCheck.checkName(name) == false) nameError.add(name);
+								}
+							}
+							if(nameError.size() == 0) {
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.BLUE + " - Es wurden keine Spieler mit fehlerhaften Namen gefunden!"));
+							}else Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - Spieler mit Fehler im Namen:"));
+							for(String player : nameError){
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - "+ TextFormatting.RED +player));
 							}
 						}
 					}

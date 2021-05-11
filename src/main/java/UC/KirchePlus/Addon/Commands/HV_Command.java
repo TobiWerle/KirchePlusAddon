@@ -7,6 +7,7 @@ import java.util.List;
 
 import UC.KirchePlus.Addon.Events.Displayname;
 import UC.KirchePlus.Addon.Utils.HV_User;
+import UC.KirchePlus.Addon.Utils.PlayerCheck;
 import UC.KirchePlus.Addon.Utils.TabellenMethoden;
 import UC.KirchePlus.Addon.main.main;
 import net.labymod.api.events.MessageSendEvent;
@@ -43,6 +44,7 @@ public class HV_Command {
 						if(args[1].equalsIgnoreCase("help")) {
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv " + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "synchronisiere die Hausverbote mit dem Client."));
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv list" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Gibt eine Liste mit allen Spielern aus, die Hausverbot haben."));
+							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv namecheck" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Überprüft ob es Fehler bei den eingetragenen Spielernamen gibt."));
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv info <User>" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Zeigt die Hausverbot-Infos zum Spieler."));
 						}else
 						if(args[1].equalsIgnoreCase("list")) {
@@ -73,7 +75,21 @@ public class HV_Command {
 							}
 							return true;
 						}else
-						if(args[0].equalsIgnoreCase("info")) {
+						if(args[1].equalsIgnoreCase("namecheck")){
+							ArrayList<String> nameError = new ArrayList<>();
+							for(String name : Displayname.HVs.keySet()) {
+								if(!isOnline(name)) {
+									if(PlayerCheck.checkName(name) == false) nameError.add(name);
+								}
+							}
+							if(nameError.size() == 0) {
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.BLUE + " - Es wurden keine Spieler mit fehlerhaften Namen gefunden!"));
+							}else Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - Spieler mit Fehler im Namen:"));
+							for(String player : nameError){
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - "+ TextFormatting.RED +player));
+							}
+						}else
+						if(args[1].equalsIgnoreCase("info")) {
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv info <User>" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Zeigt die Hausverbot-Infos zum Spieler."));
 							return true;
 						}else {
