@@ -37,7 +37,7 @@ public class Brot_Command {
 						try {
 							TabellenMethoden.getBrotList();
 						} catch (IOException | GeneralSecurityException e1) {}
-						Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Die Brotliste wurden synchronisiert!"));
+						Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Die Brotliste wurde synchronisiert!"));
 					}
 					
 					if(args.length == 2) {

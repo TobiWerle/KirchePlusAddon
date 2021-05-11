@@ -28,7 +28,7 @@ public class Displayname {
 					boolean brot = false;
 					boolean hv = false;
 					if(HVs.containsKey(e.getName())) {
-						if(TabellenMethoden.isDayNotOver(HVs.get(e.getName()).getBis())) {
+						if(!TabellenMethoden.isDayOver(HVs.get(e.getName()).getBis())) {
 							hv = true;
 						}
 					}

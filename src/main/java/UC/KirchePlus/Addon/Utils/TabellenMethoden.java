@@ -24,7 +24,6 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import UC.KirchePlus.Addon.Events.Displayname;
-import UC.KirchePlus.Addon.main.main;
 
 public class TabellenMethoden {
 	
@@ -143,27 +142,36 @@ public class TabellenMethoden {
         
     	return false;
     }
-    
-    public static boolean isDayNotOver(String s) {
-        Calendar calendar = Calendar.getInstance();
-        int currentday = calendar.get(Calendar.DAY_OF_MONTH);
-        int currentmonth = calendar.get(Calendar.MONTH)+1;
-        int currentyear = calendar.get(Calendar.YEAR);
-        String[] date = s.replace(".", "-").split("-");
-        
-        
-        if(date.length == 2) {
-            if(Integer.parseInt(date[0]) >= currentday && Integer.parseInt(date[1]) >= currentmonth) {
-            	return true;
-            }
-        }
-        if(date.length == 3) {
-            if(Integer.parseInt(date[0]) >= currentday && Integer.parseInt(date[1]) >= currentmonth && Integer.parseInt(date[2]) == currentyear) {
-            	return true;
-            }
-        }
-        
-    	return false;
-    }
+
+	public static boolean isDayOver(String s) {
+		Calendar calendar = Calendar.getInstance();
+		int currentday = calendar.get(Calendar.DAY_OF_MONTH);
+		int currentmonth = calendar.get(Calendar.MONTH)+1;
+		int currentyear = calendar.get(Calendar.YEAR);
+		String[] date = s.replace(".", "-").split("-");
+
+		int dayEnd = Integer.parseInt(date[0]);
+		int monthEnd = Integer.parseInt(date[1]);
+
+		if(date.length == 2) {
+			if(currentday > dayEnd){
+				if(currentmonth == monthEnd){
+					return true;
+				}
+			}
+		}
+		if(date.length == 3) {
+			int yearEnd = Integer.parseInt(date[2]);
+
+			if(currentyear == yearEnd){
+				if(currentday > dayEnd){
+					if(currentmonth == monthEnd){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 }
