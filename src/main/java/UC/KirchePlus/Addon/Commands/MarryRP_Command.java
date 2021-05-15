@@ -5,9 +5,6 @@ import UC.KirchePlus.Addon.Utils.MarryFile.types;
 import UC.KirchePlus.Addon.main.main;
 import net.labymod.api.events.MessageSendEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 

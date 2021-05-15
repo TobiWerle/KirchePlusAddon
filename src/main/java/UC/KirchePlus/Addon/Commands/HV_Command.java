@@ -3,7 +3,6 @@ package UC.KirchePlus.Addon.Commands;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.List;
 
 import UC.KirchePlus.Addon.Events.Displayname;
 import UC.KirchePlus.Addon.Utils.HV_User;
@@ -12,14 +11,6 @@ import UC.KirchePlus.Addon.Utils.TabellenMethoden;
 import UC.KirchePlus.Addon.main.main;
 import net.labymod.api.events.MessageSendEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
@@ -34,10 +25,17 @@ public class HV_Command {
 				String[] args = arg.split(" ");
 				if(args[0].equalsIgnoreCase("/hv")) {
 					if(args.length == 1) {
-						try {
-							TabellenMethoden.getHVList();
-						} catch (IOException | GeneralSecurityException e1) {}
-						Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Die Hausverbote wurden synchronisiert!"));
+						Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GRAY + " Die Hausverbote werden synchronisiert! Dies könnte paar Sekunden dauern!"));
+						Thread thread = new Thread(){
+							@Override
+							public void run() {
+								try {
+									TabellenMethoden.getHVList();
+								} catch (IOException | GeneralSecurityException e1) {}
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.AQUA + "Die Hausverbote wurden synchronisiert!"));
+							}
+						};
+						thread.start();
 					}
 					
 					if(args.length == 2) {
@@ -76,18 +74,26 @@ public class HV_Command {
 							return true;
 						}else
 						if(args[1].equalsIgnoreCase("namecheck")){
-							ArrayList<String> nameError = new ArrayList<>();
-							for(String name : Displayname.HVs.keySet()) {
-								if(!isOnline(name)) {
-									if(PlayerCheck.checkName(name) == false) nameError.add(name);
+							Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GRAY + " NameCheck wird ausgeführt! Dies könnte paar Sekunden dauern!"));
+							Thread thread = new Thread(){
+								@Override
+								public void run() {
+									ArrayList<String> nameError = new ArrayList<>();
+									for(String name : Displayname.HVs.keySet()) {
+										if(!isOnline(name)) {
+											if(PlayerCheck.checkName(name) == false) nameError.add(name);
+										}
+									}
+									if(nameError.size() == 0) {
+										Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.BLUE + " - Es wurden keine Spieler mit fehlerhaften Namen gefunden!"));
+									}else Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - Spieler mit Fehler im Namen:"));
+									for(String player : nameError){
+										Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - "+ TextFormatting.RED +player));
+									}
+
 								}
-							}
-							if(nameError.size() == 0) {
-								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.BLUE + " - Es wurden keine Spieler mit fehlerhaften Namen gefunden!"));
-							}else Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - Spieler mit Fehler im Namen:"));
-							for(String player : nameError){
-								Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - "+ TextFormatting.RED +player));
-							}
+							};
+							thread.start();
 						}else
 						if(args[1].equalsIgnoreCase("info")) {
 							displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "/hv info <User>" + TextFormatting.DARK_GRAY + "-> " + TextFormatting.GRAY + "Zeigt die Hausverbot-Infos zum Spieler."));
