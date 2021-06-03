@@ -11,6 +11,7 @@ import UC.KirchePlus.Addon.main.main;
 import net.labymod.api.events.RenderEntityEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.scoreboard.ScorePlayerTeam;
 
 public class Displayname {
 	
@@ -38,13 +39,20 @@ public class Displayname {
 						}
 					}
 					if(brot == true || hv == true) {
-						DisplayStringAbovePlayer.draw(e, f4, hv, brot);
+						if(!isMasked((EntityPlayer)e)) {
+							DisplayStringAbovePlayer.draw(e, f4, hv, brot);
+						}
 					}
 				}
 			}
 		});
 		
 	}
-	
+	private static boolean isMasked(EntityPlayer ep){
+		if(ScorePlayerTeam.formatPlayerName(ep.getTeam(), ep.getName()).contains("§k")){
+			return true;
+		}
+		return false;
+	}
 	
 }

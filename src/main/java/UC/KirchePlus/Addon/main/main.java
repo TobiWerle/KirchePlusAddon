@@ -31,7 +31,6 @@ public class main extends LabyModAddon{
 	@Override
 	public void onEnable() {
 		main = this;
-		
 		//Load
 		new Displayname();
 		MarryFile.load();
