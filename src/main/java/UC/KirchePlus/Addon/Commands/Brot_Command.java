@@ -119,9 +119,10 @@ public class Brot_Command {
 								}
 							}	
 						}
-					}	
+					}
+					return true;
 				}
-				return true;
+				return false;
 			}
 		});
 	}

@@ -43,8 +43,9 @@ public class MarryRP_Command {
 						displayMessage(new TextComponentString(TextFormatting.DARK_GRAY + " - " + TextFormatting.AQUA + "Du hast erfolgreich ein MarryRP Text für "+ TextFormatting.GREEN + name1 
 								+ TextFormatting.AQUA + " und " +TextFormatting.GREEN + name2 + TextFormatting.AQUA +" erstellt"));
 					}
+					return true;
 				}
-				return true;
+				return false;
 			}
 		});
 	}

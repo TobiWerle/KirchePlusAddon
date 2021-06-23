@@ -128,9 +128,10 @@ public class HV_Command {
 								}
 							}	
 						}
-					}	
+					}
+					return true;
 				}
-				return true;
+				return false;
 			}
 			
 		});
