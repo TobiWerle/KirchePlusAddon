@@ -24,7 +24,7 @@ public class main extends LabyModAddon{
     
     public static boolean hv = false;
     public static boolean bread = false;
-    
+
     public static String hvPrefix = "&8[&cHV&8]";
     public static String breadprefix = "&8[&2X&8]";
     
