@@ -36,10 +36,11 @@ public class main extends LabyModAddon{
 		MarryFile.load();
 		TabellenMethoden.init();
 		try {
-			TabellenMethoden.getBrotList();
 			TabellenMethoden.getHVList();
+		} catch (Exception e) {e.printStackTrace();}
+		try{
+		TabellenMethoden.getBrotList();
 		} catch (Exception e) {}
-		
 		//Commands
 		new MarryRP_Command();
 		new Brot_Command();
