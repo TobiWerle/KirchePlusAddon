@@ -2,7 +2,6 @@ package UC.KirchePlus.Addon.main;
 
 import java.util.List;
 
-import UC.KirchePlus.Addon.Commands.Brot_Command;
 import UC.KirchePlus.Addon.Commands.HV_Command;
 import UC.KirchePlus.Addon.Commands.MarryRP_Command;
 import UC.KirchePlus.Addon.Events.Displayname;
@@ -43,7 +42,6 @@ public class main extends LabyModAddon{
 		} catch (Exception e) {}
 		//Commands
 		new MarryRP_Command();
-		new Brot_Command();
 		new HV_Command();
 	}
 

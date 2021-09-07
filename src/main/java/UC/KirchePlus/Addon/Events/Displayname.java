@@ -3,8 +3,6 @@ package UC.KirchePlus.Addon.Events;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import UC.KirchePlus.Addon.Utils.Brot_User;
-import UC.KirchePlus.Addon.Utils.DisplayStringAbovePlayer;
 import UC.KirchePlus.Addon.Utils.HV_User;
 import UC.KirchePlus.Addon.Utils.TabellenMethoden;
 import UC.KirchePlus.Addon.main.main;
@@ -18,7 +16,6 @@ public class Displayname {
 	public static ArrayList<EntityPlayer> players = new ArrayList<EntityPlayer>();
 	
 	public static HashMap<String, HV_User> HVs = new HashMap<String, HV_User>();
-	public static HashMap<String, Brot_User> BrotUser = new HashMap<String, Brot_User>();
 
 	
 	public Displayname() {
@@ -31,16 +28,6 @@ public class Displayname {
 					if(HVs.containsKey(e.getName())) {
 						if(!TabellenMethoden.isDayOver(HVs.get(e.getName()).getBis())) {
 							hv = true;
-						}
-					}
-					if(BrotUser.containsKey(e.getName())) {
-						if(TabellenMethoden.isSameDay(BrotUser.get(e.getName()).getDatum())) {
-							brot = true;
-						}
-					}
-					if(brot == true || hv == true) {
-						if(!isMasked((EntityPlayer)e)) {
-							DisplayStringAbovePlayer.draw(e, f4, hv, brot);
 						}
 					}
 				}
