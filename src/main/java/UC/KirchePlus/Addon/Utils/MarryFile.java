@@ -76,40 +76,46 @@ public class MarryFile {
 	
 	
 	public static void createMarryRP(types Type, String Name1, String Name2) {
-		createCopyFromFile(Type, Name1, Name2);
+		createCopyFromFile(Type, Name1, Name2, false);
 	}
-	
-	
-	private static void createCopyFromFile(types Type, String Name1, String Name2) {
-		FileOutputStream outstream = null;
- 
-    	try{	
-    	    File outfile = new File(System.getProperty("user.home") + "/Desktop/"+ "MarryRP - "+Type.name()+" "+Name1+"-"+Name2+".txt");
-    	    InputStream instream = getFile(Type);    	    
-    	    outstream = new FileOutputStream(outfile);
- 
-    	    byte[] buffer = new byte[1024];
- 
-    	    int length;
 
-    	    while ((length = instream.read(buffer)) > 0){
-    	    	outstream.write(buffer, 0, length);
-    	    }
-    	    
-    	    String content = new String(Files.readAllBytes(outfile.toPath()), StandardCharsets.UTF_8);
-    	    if(Type == types.MM) content = content.replaceAll("<Mann1>", Name1).replaceAll("<Mann2>", Name2);
-    	    if(Type == types.FF) content = content.replaceAll("<Frau1>", Name1).replaceAll("<Frau2>", Name2);
-    	    if(Type == types.MF) content = content.replaceAll("<Mann>", Name1).replaceAll("<Frau>", Name2);
-    	    
-    	    Files.write(outfile.toPath(), content.getBytes(StandardCharsets.UTF_8));
-    	    
-    	    instream.close();
-    	    outstream.close();
-    	    
-    	}catch(IOException ioe){
-    		ioe.printStackTrace();
-    	 }
-    }
+
+	private static void createCopyFromFile(types Type, String Name1, String Name2, boolean oneDrive) {
+		FileOutputStream outstream = null;
+
+		try{
+			String onedrive = "";
+			if(oneDrive == true) onedrive = "/OneDrive";
+			File outfile = new File(System.getProperty("user.home") + onedrive +"/Desktop/"+ "MarryRP "+Type.name()+" "+Name1+"-"+Name2+".txt");
+			InputStream instream = getFile(Type);
+			outstream = new FileOutputStream(outfile);
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+
+			while ((length = instream.read(buffer)) > 0){
+				outstream.write(buffer, 0, length);
+			}
+
+			String content = new String(Files.readAllBytes(outfile.toPath()), StandardCharsets.UTF_8);
+			if(Type == types.MM) content = content.replaceAll("<Mann1>", Name1).replaceAll("<Mann2>", Name2);
+			if(Type == types.FF) content = content.replaceAll("<Frau1>", Name1).replaceAll("<Frau2>", Name2);
+			if(Type == types.MF) content = content.replaceAll("<Mann>", Name1).replaceAll("<Frau>", Name2);
+
+			Files.write(outfile.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+			instream.close();
+			outstream.close();
+
+		}catch(IOException ioe){
+			if(oneDrive == false){
+				createCopyFromFile(Type, Name1, Name2, true);
+				return;
+			}
+			ioe.printStackTrace();
+		}
+	}
 	
 	
 
