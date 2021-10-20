@@ -22,10 +22,8 @@ public class main extends LabyModAddon{
 	public static main main;
     
     public static boolean hv = false;
-    public static boolean bread = false;
 
     public static String hvPrefix = "&8[&cHV&8]";
-    public static String breadprefix = "&8[&2X&8]";
     
 	@Override
 	public void onEnable() {
@@ -37,9 +35,6 @@ public class main extends LabyModAddon{
 		try {
 			TabellenMethoden.getHVList();
 		} catch (Exception e) {e.printStackTrace();}
-		try{
-		TabellenMethoden.getBrotList();
-		} catch (Exception e) {}
 		//Commands
 		new MarryRP_Command();
 		new HV_Command();
@@ -52,15 +47,8 @@ public class main extends LabyModAddon{
 			getConfig().addProperty("hv.Prefix", "&8[&cHV&8]");
 			saveConfig();
 		}
-		if(!getConfig().has("bread.Enabled")) {
-			getConfig().addProperty("bread.Enabled", true);
-			getConfig().addProperty("bread.Prefix", "&8[&2X&8]");
-			saveConfig();
-		}
 		hv = getConfig().get("hv.Enabled").getAsBoolean();
-		bread = getConfig().get("bread.Enabled").getAsBoolean();
 		hvPrefix = getConfig().get("hv.Prefix").getAsString();
-		breadprefix = getConfig().get("bread.Prefix").getAsString();
 		
 		saveConfig();
 	}
@@ -88,29 +76,6 @@ public class main extends LabyModAddon{
 				saveConfig();
 			}
 		}));
-		
-		element.add(new HeaderElement(ModColor.cl('2') + "Brotlist Settings"));
-		
-		element.add(new BooleanElement("Brotlist Enabled", new ControlElement.IconData(Material.BREAD), new Consumer<Boolean>() {
-			
-			@Override
-			public void accept(Boolean bool) {
-				hv = bool;
-				getConfig().addProperty("bread.Enabled", bool);
-				saveConfig();
-			}
-		}, hv));
-		
-		element.add(new StringElement("Brotlist Prefix", new ControlElement.IconData(Material.BREAD), breadprefix, new Consumer<String>() {
-
-			@Override
-			public void accept(String s) {
-				hvPrefix = s;
-				getConfig().addProperty("bread.Prefix", s);
-				saveConfig();
-			}
-		}));
-		
 	}
 	
 }
