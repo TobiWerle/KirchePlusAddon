@@ -68,12 +68,7 @@ public class DisplayStringAbovePlayer {
             String BrotPrefix = "";
             
             
-            
-            if(brot == true) {
-            	if(main.bread == true) {
-            		BrotPrefix = ModColor.createColors(main.breadprefix);
-            	}
-            }
+
             if(hv == true) {
             	if(main.hv == true) {
             		HVPrefix = ModColor.createColors(main.hvPrefix);
@@ -81,7 +76,7 @@ public class DisplayStringAbovePlayer {
             }
             
             if(!entity.isSneaking()) {
-            	fontrenderer.drawString(HVPrefix+BrotPrefix, -fontrenderer.getStringWidth(HVPrefix+BrotPrefix) / 2, (float)yPos, Color.white.getRGB(), true);
+            	fontrenderer.drawString(HVPrefix+BrotPrefix, -fontrenderer.getStringWidth(HVPrefix) / 2, (float)yPos, Color.white.getRGB(), true);
             }
    
             
